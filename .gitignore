@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment / secrets
+.env
+
+# Bot data (private)
+database/*/appstate.json
+database/*/config.json
+
+# User accounts / panel data
+users/
+
+# Cache
+cache/
+.cache/
+
+# Runtime files
+*.pid
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Termux / temp
+*.swp
+*.swo
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,70 @@
+{
+  "name": "multi-bot-panel-framework",
+  "version": "1.0.0",
+  "description": "Multi bot Messenger framework with web panel",
+
+  "author": "Azuki (Daniel Mojar)",
+
+  "main": "app.js",
+
+  "type": "commonjs",
+
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+
+
+  "dependencies": {
+
+    "@tas33n/ws3-fca": "latest",
+
+    "axios": "^1.8.4",
+
+    "bcrypt": "^5.1.1",
+
+    "chalk": "^4.1.2",
+
+    "chokidar": "^4.0.3",
+
+    "cookie-parser": "^1.4.7",
+
+    "cors": "^2.8.5",
+
+    "dayjs": "^1.11.13",
+
+    "express": "^4.21.2",
+
+    "fs-extra": "^11.3.0",
+
+    "helmet": "^8.1.0",
+
+    "jsonwebtoken": "^9.0.2",
+
+    "mongodb": "^6.12.0",
+
+    "simple-git": "^3.27.0",
+
+    "socket.io": "^4.8.1",
+
+    "uuid": "^11.1.0"
+
+  },
+
+
+  "devDependencies": {
+
+    "nodemon": "^3.1.9"
+
+  },
+
+
+  "credits": {
+
+    "framework": "Azuki (Daniel Mojar)",
+
+    "fca": "@tas33n/ws3-fca developers and contributors"
+
+  }
+
+}

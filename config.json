@@ -1,0 +1,55 @@
+{
+    "ownerID": [
+        "YOUR_FACEBOOK_ID"
+    ],
+
+    "database": {
+        "type": "json",
+        "mongoURI": "NONE"
+    },
+
+
+    "externalGitRepo": [
+        {
+            "url": "",
+            "branch": "main"
+        }
+    ],
+
+
+    "github": {
+        "autoUpdate": true,
+        "commandsFolder": "Commands",
+        "eventsFolder": "Events"
+    },
+
+
+    "panel": {
+        "enabled": true,
+
+        "host": "0.0.0.0",
+        "port": 3000
+    },
+
+
+    "folders": {
+        "commands": "./c",
+        "events": "./e",
+        "handlers": "./h",
+        "database": "./database",
+        "cache": "./cache"
+    },
+
+
+    "watch": {
+        "commands": true,
+        "events": true,
+        "handlers": true
+    },
+
+
+    "logs": {
+        "console": true,
+        "file": true
+    }
+}

@@ -1,0 +1,136 @@
+* {
+
+    box-sizing:border-box;
+
+}
+
+
+body {
+
+    margin:0;
+
+    background:#050505;
+
+    color:white;
+
+    font-family:
+    Arial, Helvetica, sans-serif;
+
+}
+
+
+
+.container {
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+
+.card {
+
+
+    background:#111;
+
+    width:400px;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 0 30px #000;
+
+
+}
+
+
+
+h1 {
+
+    text-align:center;
+
+}
+
+
+
+
+input,
+textarea {
+
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:12px;
+
+    background:#050505;
+
+    border:1px solid #333;
+
+    color:white;
+
+    border-radius:8px;
+
+
+}
+
+
+
+textarea {
+
+    height:120px;
+
+    resize:none;
+
+}
+
+
+
+button {
+
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:12px;
+
+    background:#222;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+
+}
+
+
+
+button:hover {
+
+    background:#333;
+
+}
+
+
+
+#message {
+
+    text-align:center;
+
+    margin-top:15px;
+
+}

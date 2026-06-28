@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<h1>
+Bot Dashboard
+</h1>
+
+
+<div id="bots"></div>
+
+
+
+
+<div class="card">
+
+
+<h2>
+Bot Settings
+</h2>
+
+
+
+<input
+id="botID"
+placeholder="Bot ID"
+/>
+
+
+
+<input
+id="prefix"
+placeholder="Prefix"
+/>
+
+
+
+<textarea
+id="admins"
+placeholder="Admins (one per line)"
+></textarea>
+
+
+
+<button onclick="saveSettings()">
+Save Settings
+</button>
+
+
+
+<button onclick="stopBot()">
+Stop Bot
+</button>
+
+
+
+<button onclick="startBot()">
+Start Bot
+</button>
+
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<script src="/js/app.js"></script>
+
+
+</body>
+
+</html>
