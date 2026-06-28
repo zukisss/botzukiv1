@@ -2,24 +2,15 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs-extra");
 
-const bcrypt =
-    require("bcrypt");
-
-const jwt =
-    require("jsonwebtoken");
-
-const { v4: uuidv4 } =
-    require("uuid");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
 
 
-const router =
-    express.Router();
+const router = express.Router();
 
 
-
-const config =
-    require("../../config.json");
-
+const config = require("../../config.json");
 
 
 const DATA =
@@ -32,26 +23,20 @@ const DATA =
 
 function usersFile(){
 
-
     return path.join(
         DATA,
         "users.json"
     );
-
 
 }
 
 
 
 
-
 function readUsers(){
 
-
     if(
-        !fs.existsSync(
-            usersFile()
-        )
+        !fs.existsSync(usersFile())
     ){
 
         return [];
@@ -59,20 +44,16 @@ function readUsers(){
     }
 
 
-
     return fs.readJSONSync(
         usersFile()
     );
-
 
 }
 
 
 
 
-
 function saveUsers(users){
-
 
     fs.writeJSONSync(
         usersFile(),
@@ -82,9 +63,7 @@ function saveUsers(users){
         }
     );
 
-
 }
-
 
 
 
@@ -118,8 +97,6 @@ admins
 
 
 
-
-
 if(
 !username ||
 !password ||
@@ -140,16 +117,14 @@ error:
 
 
 
-
 let users =
     readUsers();
 
 
 
 
-
 if(
-users.find(
+users.some(
 u=>u.username === username
 )
 ){
@@ -162,9 +137,6 @@ error:
 });
 
 }
-
-
-
 
 
 
@@ -184,7 +156,6 @@ JSON.parse(
 
 
 }
-
 catch(e){
 
 
@@ -205,10 +176,8 @@ error:
 
 
 
-
 let botID =
 uuidv4();
-
 
 
 
@@ -280,7 +249,6 @@ admins
 
 
 
-
 fs.writeJSONSync(
 
 path.join(
@@ -303,8 +271,7 @@ spaces:4
 
 
 
-
-let hash =
+let passwordHash =
 await bcrypt.hash(
 password,
 10
@@ -315,19 +282,21 @@ password,
 
 
 
+
 users.push({
 
 username,
 
-password:hash,
+password:
+passwordHash,
 
 
 bots:[
 botID
 ]
 
-
 });
+
 
 
 
@@ -356,12 +325,12 @@ botID
 
 
 
-}
 
+}
 catch(err){
 
 
-console.log(err);
+console.error(err);
 
 
 res.json({
@@ -373,6 +342,7 @@ error:
 
 
 }
+
 
 
 });
@@ -390,6 +360,9 @@ router.post(
 async(req,res)=>{
 
 
+try{
+
+
 const {
 
 username,
@@ -404,16 +377,19 @@ password
 
 
 
+
 let users =
-readUsers();
+    readUsers();
+
 
 
 
 
 let user =
-users.find(
-u=>u.username === username
-);
+    users.find(
+        u =>
+        u.username === username
+    );
 
 
 
@@ -426,7 +402,7 @@ if(!user){
 return res.json({
 
 error:
-"Invalid login"
+"Invalid username or password"
 
 });
 
@@ -439,7 +415,7 @@ error:
 
 
 
-let ok =
+let valid =
 await bcrypt.compare(
 
 password,
@@ -453,21 +429,18 @@ user.password
 
 
 
-
-if(!ok){
+if(!valid){
 
 
 return res.json({
 
 error:
-"Invalid login"
+"Invalid username or password"
 
 });
 
 
 }
-
-
 
 
 
@@ -486,7 +459,7 @@ user.bots
 
 },
 
-config.security.jwtSecret,
+config.jwtSecret,
 
 {
 
@@ -503,14 +476,21 @@ expiresIn:
 
 
 
+
 res.cookie(
+
 "token",
+
 token,
+
 {
 
-httpOnly:true
+httpOnly:true,
+
+sameSite:"lax"
 
 }
+
 );
 
 
@@ -524,6 +504,27 @@ res.json({
 success:true
 
 });
+
+
+
+
+
+}
+catch(err){
+
+
+console.error(err);
+
+
+res.json({
+
+error:
+"Login failed"
+
+});
+
+
+}
 
 
 

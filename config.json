@@ -3,6 +3,7 @@
         "YOUR_FACEBOOK_ID"
     ],
 
+    "jwtSecret": "bot-panel-random-secret-928374",
     "database": {
         "type": "json",
         "mongoURI": "NONE"
