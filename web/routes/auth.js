@@ -10,7 +10,8 @@ const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 
 
-const config = require("../../config.json");
+const config =
+    require("../../config.json");
 
 
 const DATA =
@@ -44,26 +45,61 @@ function readUsers(){
     }
 
 
-    return fs.readJSONSync(
-        usersFile()
-    );
+    let data =
+        fs.readJSONSync(
+            usersFile()
+        );
+
+
+
+    // support old format
+    if(
+        !Array.isArray(data)
+    ){
+
+        if(
+            Array.isArray(data.users)
+        ){
+
+            return data.users;
+
+        }
+
+
+        return [];
+
+    }
+
+
+
+    return data;
 
 }
+
 
 
 
 
 function saveUsers(users){
 
+
     fs.writeJSONSync(
+
         usersFile(),
+
         users,
+
         {
             spaces:4
         }
+
     );
 
+
 }
+
+
+
 
 
 
@@ -105,12 +141,12 @@ if(
 
 return res.json({
 
-error:
-"Missing fields"
+error:"Missing fields"
 
 });
 
 }
+
 
 
 
@@ -123,20 +159,24 @@ let users =
 
 
 
+
+
 if(
 users.some(
-u=>u.username === username
+u =>
+u.username === username
 )
 ){
 
 return res.json({
 
-error:
-"Username already exists"
+error:"Username already exists"
 
 });
 
 }
+
+
 
 
 
@@ -161,8 +201,7 @@ catch(e){
 
 return res.json({
 
-error:
-"Invalid appstate JSON"
+error:"Invalid appstate JSON"
 
 });
 
@@ -175,13 +214,12 @@ error:
 
 
 
-
 let botID =
 uuidv4();
 
 
 
-let botFolder =
+let folder =
 path.join(
 DATA,
 botID
@@ -189,9 +227,7 @@ botID
 
 
 
-fs.ensureDirSync(
-botFolder
-);
+fs.ensureDirSync(folder);
 
 
 
@@ -202,7 +238,7 @@ botFolder
 fs.writeJSONSync(
 
 path.join(
-botFolder,
+folder,
 "appstate.json"
 ),
 
@@ -220,43 +256,30 @@ spaces:4
 
 
 
-let botConfig = {
 
+fs.writeJSONSync(
 
-id:
-botID,
+path.join(
+folder,
+"config.json"
+),
 
+{
+
+id:botID,
 
 prefix:
 prefix || "",
 
 
-
 admins:
 admins
 ?
-admins
-.split("\n")
-.filter(Boolean)
+admins.split("\n").filter(Boolean)
 :
 []
 
-
-};
-
-
-
-
-
-
-fs.writeJSONSync(
-
-path.join(
-botFolder,
-"config.json"
-),
-
-botConfig,
+},
 
 {
 spaces:4
@@ -270,13 +293,11 @@ spaces:4
 
 
 
-
-let passwordHash =
+let hash =
 await bcrypt.hash(
 password,
 10
 );
-
 
 
 
@@ -288,8 +309,7 @@ users.push({
 username,
 
 password:
-passwordHash,
-
+hash,
 
 bots:[
 botID
@@ -301,12 +321,7 @@ botID
 
 
 
-
-
-saveUsers(
-users
-);
-
+saveUsers(users);
 
 
 
@@ -321,7 +336,6 @@ success:true,
 botID
 
 });
-
 
 
 
@@ -369,27 +383,24 @@ username,
 
 password
 
-
-} = req.body;
-
-
+}=req.body;
 
 
 
 
 
 let users =
-    readUsers();
+readUsers();
 
 
 
 
 
 let user =
-    users.find(
-        u =>
-        u.username === username
-    );
+users.find(
+u =>
+u.username === username
+);
 
 
 
@@ -398,14 +409,11 @@ let user =
 
 if(!user){
 
-
 return res.json({
 
-error:
-"Invalid username or password"
+error:"Invalid username or password"
 
 });
-
 
 }
 
@@ -414,8 +422,7 @@ error:
 
 
 
-
-let valid =
+let ok =
 await bcrypt.compare(
 
 password,
@@ -428,19 +435,17 @@ user.password
 
 
 
-
-if(!valid){
-
+if(!ok){
 
 return res.json({
 
-error:
-"Invalid username or password"
+error:"Invalid username or password"
 
 });
 
-
 }
+
+
 
 
 
@@ -455,21 +460,17 @@ jwt.sign(
 username,
 
 bots:
-user.bots
+user.bots || []
 
 },
 
 config.jwtSecret,
 
 {
-
-expiresIn:
-"7d"
-
+expiresIn:"7d"
 }
 
 );
-
 
 
 
@@ -507,25 +508,18 @@ success:true
 
 
 
-
-
 }
 catch(err){
 
-
 console.error(err);
-
 
 res.json({
 
-error:
-"Login failed"
+error:"Login failed"
 
 });
 
-
 }
-
 
 
 });
